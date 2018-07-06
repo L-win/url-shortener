@@ -17,6 +17,7 @@
         
         public function get($shortUrl)
         {
+            $shortUrl = mysqli_escape_string( $this->con, $shortUrl );
             $sql = " SELECT * FROM links WHERE short = '$shortUrl' ";
             $query = mysqli_query( $this->con, $sql );
             return $query;
