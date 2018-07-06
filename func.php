@@ -64,7 +64,6 @@
         {
             if ( $this->isUrlSet() ) {
                 $originalUrl = $this -> isUrlSet();
-                // echo $originalUrl;
                 $exists = $this->db->exists($originalUrl);
                 if ( mysqli_num_rows($exists) == 0 ) {
                     $shortUrl = $this -> makeShort($originalUrl);
@@ -104,7 +103,6 @@
             $route = rtrim( $route, '/' );
             $route = htmlentities( $route );
             $route = explode( '/', $route );
-            var_dump($route);
             if ( in_array('u',$route) ) {
                 $shortUrl = array_pop($route);
                 echo $shortUrl;

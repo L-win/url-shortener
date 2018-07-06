@@ -1,7 +1,10 @@
 <?php
-    require 'func.php';
-    $app = new App;
-    $result = $app->boot();
+
+require 'func.php';
+
+$app = new App;
+$result = $app->boot();
+
 ?>
 <head>
     <title>Url shortener</title>
@@ -16,9 +19,9 @@
 <br>
 <?php 
 
-    if ( isset($result) ) {
-        echo "Link: <a href=u/".$result['short'].">" . '/u/' .$result['short'] . '</a>';
-    }
+if ( isset($result) ) {
+	echo "Link: <a href=u/".$result['short'].">" . '/u/' .$result['short'] . '</a>';
+}
 
 ?>
 </body>
