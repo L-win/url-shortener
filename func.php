@@ -13,7 +13,6 @@
         private function connect()
         {
             // return mysqli_connect('','','','');
-            return mysqli_connect('localhost','root','root','test');
         }
         
         public function get($shortUrl)
