@@ -83,6 +83,7 @@
             if ( isset($_POST['originalUrl'] ) and !empty(isset($_POST['originalUrl']) ) ) {
                 $originalUrl = $_POST['originalUrl'];
                 $originalUrl = str_replace('http://','',$originalUrl);
+                $originalUrl = str_replace('https://','',$originalUrl);
                 return $originalUrl;
             }
             else {

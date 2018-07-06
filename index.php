@@ -20,7 +20,7 @@ $result = $app->boot();
 <?php 
 
 if ( isset($result) ) {
-	echo "Link: <a href=u/".$result['short'].">" . '/u/' .$result['short'] . '</a>';
+    echo "Link: <a href=u/".$result['short'].">" . '/u/' .$result['short'] . '</a>';
 }
 
 ?>
