@@ -7,7 +7,7 @@
         
         public function __construct()
         {
-            $this -> con = $this -> connect();
+            $this->con = $this->connect();
         }
         
         private function connect()
@@ -17,22 +17,22 @@
         
         public function get($shortUrl)
         {
-            $shortUrl = mysqli_escape_string( $this->con, $shortUrl );
+            $shortUrl = mysqli_escape_string($this->con, $shortUrl);
             $sql = " SELECT * FROM links WHERE short = '$shortUrl' ";
-            $query = mysqli_query( $this->con, $sql );
+            $query = mysqli_query($this->con, $sql);
             return $query;
         }
         
         public function set($originalUrl,$shortUrl)
         {
-            $originalUrl = mysqli_escape_string( $this->con, $originalUrl );
-            $sql = " INSERT INTO links(original,short) VALUES( '$originalUrl', '$shortUrl' ) ";
-            $query = mysqli_query( $this->con, $sql );
+            $originalUrl = mysqli_escape_string($this->con, $originalUrl);
+            $sql = " INSERT INTO links(original,short) VALUES('$originalUrl', '$shortUrl') ";
+            $query = mysqli_query($this->con, $sql);
         }
         
         public function exists($originalUrl)
         {
-            $originalUrl = mysqli_escape_string( $this->con, $originalUrl );
+            $originalUrl = mysqli_escape_string($this->con, $originalUrl);
             $sql = " SELECT * FROM links WHERE original = '$originalUrl' ";
             $query = mysqli_query($this->con,$sql);
             return $query;
@@ -47,32 +47,30 @@
         
         public function __construct()
         {
-            $this -> db = new Database();
+            $this->db = new Database();
         }
         
         public function boot()
         {
             $array = explode('/',$_SERVER[ 'REQUEST_URI' ]);
-            if ( in_array('u',$array) ) {
+            if (in_array('u',$array)) {
                 $this->runRedirect();
-            }
-            else {
+            } else {
                 return $this->runShortener();
             }
         }
         
         private function runShortener()
         {
-            if ( $this->isUrlSet() ) {
-                $originalUrl = $this -> isUrlSet();
+            if ($this->isUrlSet()) {
+                $originalUrl = $this->isUrlSet();
                 $exists = $this->db->exists($originalUrl);
-                if ( mysqli_num_rows($exists) == 0 ) {
-                    $shortUrl = $this -> makeShort();
-                    $this -> db -> set( $originalUrl, $shortUrl );
+                if (mysqli_num_rows($exists) == 0) {
+                    $shortUrl = $this->makeShort();
+                    $this->db->set($originalUrl, $shortUrl);
                     $result = ['short'=>$shortUrl];
                     return $result;
-                }
-                else {
+                } else {
                     $result = mysqli_fetch_assoc($exists);
                     return $result;
                 }
@@ -81,14 +79,13 @@
         
         private function isUrlSet()
         {
-            if ( isset($_POST['originalUrl'] ) and !empty(isset($_POST['originalUrl']) ) ) {
+            if (isset($_POST['originalUrl']) and !empty(isset($_POST['originalUrl']))) {
                 $originalUrl = $_POST['originalUrl'];
                 $originalUrl = str_replace('http://','',$originalUrl);
                 $originalUrl = str_replace('https://','',$originalUrl);
                 return $originalUrl;
-            }
-            else {
-                return FALSE;
+            } else {
+                return false;
             }
         }
                         
@@ -101,14 +98,14 @@
         private function runRedirect()
         {
             $uri = $_SERVER[ 'REQUEST_URI' ];
-            $route = ltrim( $uri, '/' );
-            $route = rtrim( $route, '/' );
-            $route = htmlentities( $route );
-            $route = explode( '/', $route );
-            if ( in_array('u',$route) ) {
+            $route = ltrim($uri, '/');
+            $route = rtrim($route, '/');
+            $route = htmlentities($route);
+            $route = explode('/', $route);
+            if (in_array('u',$route)) {
                 $shortUrl = array_pop($route);
                 $result = $this->db->get($shortUrl);
-                if ( mysqli_num_rows($result) == 1 ) {
+                if (mysqli_num_rows($result) == 1) {
                     $originalUrl = mysqli_fetch_assoc($result);
                     $originalUrl = $originalUrl['original'];
                     header('Location: http://'. $originalUrl);
