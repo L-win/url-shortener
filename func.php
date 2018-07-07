@@ -67,7 +67,7 @@
                 $originalUrl = $this -> isUrlSet();
                 $exists = $this->db->exists($originalUrl);
                 if ( mysqli_num_rows($exists) == 0 ) {
-                    $shortUrl = $this -> makeShort($originalUrl);
+                    $shortUrl = $this -> makeShort();
                     $this -> db -> set( $originalUrl, $shortUrl );
                     $result = ['short'=>$shortUrl];
                     return $result;
@@ -92,7 +92,7 @@
             }
         }
                         
-        private function makeShort($originalUrl)
+        private function makeShort()
         {
             $shortUrl = substr(md5(microtime()),rand(0,26),5);
             return $shortUrl;
@@ -107,7 +107,6 @@
             $route = explode( '/', $route );
             if ( in_array('u',$route) ) {
                 $shortUrl = array_pop($route);
-                echo $shortUrl;
                 $result = $this->db->get($shortUrl);
                 if ( mysqli_num_rows($result) == 1 ) {
                     $originalUrl = mysqli_fetch_assoc($result);
