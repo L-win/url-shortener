@@ -1,8 +1,8 @@
 <?php
 
-require 'func.php';
+require 'src\autoload.php';
 
-$app = new App;
+$app = new src\App;
 $result = $app->boot();
 
 ?>
